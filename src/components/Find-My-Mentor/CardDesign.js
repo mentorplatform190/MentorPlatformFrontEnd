@@ -45,43 +45,45 @@ const useStyles = makeStyles((theme) => ({
 
 const CardDesign = (props) => {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     const classes = useStyles();
+    const avatarImage = props.name.toUpperCase().split('')
     return (
 
         <Container style={{ marginBottom: "40px" }}>
-            {isMobile ? (
+            {isTablet ? (
                 <Grid container sm={12} spacing={2}>
                     <Grid container sm={10} xs={12} >
                         <Paper style={{ display: "flex", flexDirection: 'column' }} classes={{ root: classes.root }}>
                             <Container>
                                 <Grid item container direction="row" style={{ marginTop: "15px", marginBottom: "15px" }} spacing={1}>
                                     <Grid item sm={2} xs={6}>
-                                        <Avatar src='' className={classes.large} >
-                                            <Typography color="primary" variant="p">RG</Typography>
+                                        <Avatar src="" className={classes.large} >
+                                            <Typography color="primary" >{avatarImage[0]}{avatarImage[1]}</Typography>
                                         </Avatar>
                                     </Grid>
                                     <Grid item sm={4} xs={6} style={{ alignSelf: 'center' }}>
-                                        <Typography color="primary" variant="h6">Ritika Gupta</Typography>
+                                        <Typography color="primary" variant="h6">{props.name}</Typography>
                                     </Grid>
                                     <Grid item sm={6} xs={12} spacing={4} style={{ alignSelf: 'center' }}>
-                                        <Typography color="primary" variant="h6">Product Manager At zoom</Typography>
+                                        <Typography color="primary" variant="h6">{props.position}</Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid item container xs={12} sm={12} direction="row" justify="space-between">
                                     <Grid item>
-                                        <Typography color="primary" className={classes.borderStyling} variant="h7">javascript</Typography>
+                                        {props.skills[0] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[0]}</Typography> : null}
                                     </Grid>
                                     <Grid item>
-                                        <Typography color="primary" className={classes.borderStyling} variant="h7">Datascience</Typography>
+                                        {props.skills[1] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[1]}</Typography> : null}
                                     </Grid>
-                                    <Grid item>
-                                        <Typography color="primary" className={classes.borderStyling} variant="h7">Datascience</Typography>
-                                    </Grid>
+                                    {!isMobile ? (<Grid item>
+                                        {props.skills[2] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[2]}</Typography> : null}
+                                    </Grid>) : null}
                                 </Grid>
 
                                 <Grid item sm={12} style={{ marginTop: '10px' }}>
-                                    <Typography color="primary" variant="p">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Typography>
+                                    <Typography color="primary" >{props.bio}</Typography>
                                 </Grid>
                                 <Grid item container direction="row" style={{ margin: "15px 0 15px 0" }}>
                                     <Grid item container sm={6} xs={12} direction="row" justify="space-between">
@@ -99,7 +101,7 @@ const CardDesign = (props) => {
                                         </Grid>
                                     </Grid>
                                     <Grid container item sm={6} xs={12} className={classes.paymentDir}>
-                                        <Typography color="primary" variant="h6">550/hour</Typography>
+                                        <Typography color="primary" variant="h6">{props.price}/hour</Typography>
                                     </Grid>
                                 </Grid>
                             </Container>
@@ -121,8 +123,8 @@ const CardDesign = (props) => {
 
                 (<Grid container sm={12}>
                     <Grid item sm={2} container justify="flex-end" alignContent="center">
-                        <Avatar src='' className={classes.large} >
-                            <Typography color="primary" variant="h2">RG</Typography>
+                        <Avatar src="" className={classes.large} >
+                            <Typography color="primary" variant="h2">{avatarImage[0]}{avatarImage[1]}</Typography>
                         </Avatar>
                     </Grid>
                     <Grid item sm={6} >
@@ -130,26 +132,26 @@ const CardDesign = (props) => {
                             <Container>
                                 <Grid item container direction="row" style={{ marginTop: "15px" }}>
                                     <Grid item sm={4} >
-                                        <Typography color="primary" variant="h6">Ritika</Typography>
+                                        <Typography color="primary" variant="h6">{props.name}</Typography>
                                     </Grid>
                                     <Grid item container sm={8} direction="row" justify="space-evenly">
                                         <Grid item>
-                                            <Typography color="primary" className={classes.borderStyling} variant="p">javascript</Typography>
+                                            {props.skills[0] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[0]}</Typography> : null}
                                         </Grid>
                                         <Grid item>
-                                            <Typography color="primary" className={classes.borderStyling} variant="p">Datascience</Typography>
+                                            {props.skills[1] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[1]}</Typography> : null}
                                         </Grid>
                                         <Grid item>
-                                            <Typography color="primary" className={classes.borderStyling} variant="p">Datascience</Typography>
+                                            {props.skills[2] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[2]}</Typography> : null}
                                         </Grid>
                                     </Grid>
                                 </Grid>
 
                                 <Grid item sm={12}>
-                                    <Typography color="primary" variant="h6">Product Manager At zoom</Typography>
+                                    <Typography color="primary" variant="h6">{props.position}</Typography>
                                 </Grid>
                                 <Grid item sm={12} >
-                                    <Typography color="primary" variant="p">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Typography>
+                                    <Typography color="primary" >{props.bio}</Typography>
                                 </Grid>
                                 <Grid item container direction="row" style={{ margin: "15px 0 15px 0" }}>
                                     <Grid item container sm={6} xs={6} direction="row" justify="space-between">
@@ -167,7 +169,7 @@ const CardDesign = (props) => {
                                         </Grid>
                                     </Grid>
                                     <Grid container item sm={6} justify="flex-end">
-                                        <Typography color="primary" variant="h6">550/hour</Typography>
+                                        <Typography color="primary" variant="h6">{props.price}/hour</Typography>
                                     </Grid>
                                 </Grid>
                             </Container>

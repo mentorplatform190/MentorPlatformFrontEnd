@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Design from '../Find-My-Mentor/CardDesign'
 import Profile from '../../Test';
 const All = (props) => {
-    console.log(Profile);
-    let ProfileData = Profile.map((order) => {
+    let ProfileData = Profile.map((index) => {
         return (
-            <Design />
+            <Design
+            key={index.id}
+            name={index.name}
+            image={index.image}
+            bio={index.Bio}
+            price={index.price}
+            skills={index.skills}
+            position={index.position}
+            />
         );
     });
     return (

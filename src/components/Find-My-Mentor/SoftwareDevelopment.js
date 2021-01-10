@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Design from '../Find-My-Mentor/CardDesign'
 import Profile from '../../Test';
 const Sdev = (props) => {
-    console.log(Profile);
-    let ProfileData = Profile.map((order) => {
+    const result = Profile.filter(data => data.category == 'Software-Development');
+    let ProfileData = result.map((index) => {
         return (
-            <Design />
+            <Design 
+            name={index.name}
+            bio={index.Bio}
+            price={index.price}
+            skills={index.skills}
+            position={index.position}/>
         );
     });
     return (

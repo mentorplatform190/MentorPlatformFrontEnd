@@ -29,7 +29,6 @@ const FindMentor = (props) => {
     const { match, history } = props;
     const { params } = match;
     const { page } = params;
-    console.log(page);
     const TabToIndex = {
         0: 'all',
         1: 'ProductManagement',
