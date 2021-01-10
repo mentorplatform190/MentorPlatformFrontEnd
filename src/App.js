@@ -5,6 +5,7 @@ import MentorSignup from './components/Mentor/SignUp';
 import MentorLogin from './components/Mentor/Login';
 import MenteeSignup from './components/Mentee/SignUp';
 import MenteeLogin from './components/Mentee/Login';
+import FindMentor from './components/Find-My-Mentor/FindMentor';
 import Home from './components/Home/Home';
 
 const app=(props)=> {
@@ -15,8 +16,11 @@ const app=(props)=> {
     <Route path="/mentee-register" component={MenteeSignup} />
     <Route path="/mentee-login" component={MenteeLogin} />
     <Route path="/mentor-login" exact component={MentorLogin} />
+    <Redirect exact from="/find-mentor" to="/find-mentor/all" />
+    <Route path="/find-mentor/:page?" exact component={FindMentor} />
     <Route path="/" exact component={Home} />
     <Redirect to="/" />
+  
   </Switch>
    
   );

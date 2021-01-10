@@ -12,6 +12,7 @@ import Calender from '../../assets/images/Calender.svg'
 import Students from '../../assets/images/students.png'
 import TikTok from '../../assets/images/tik-tok.jpg'
 import Google from '../../assets/images/google.jpg'
+import { withRouter } from 'react-router-dom'
 import Fb from '../../assets/images/facebook.png'
 import PayPal from '../../assets/images/pay-pal.png'
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +36,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 const Home = (props) => {
+    const { history } = props;
     const classes = useStyles();
+    const handleButtonClick = (pageUrl) => {
+        history.push(pageUrl)
+    }
     return (
         <Container>
 
@@ -49,7 +54,7 @@ const Home = (props) => {
                             <Typography color="primary" variant="h6">Connect  with them, learn from them</Typography>
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" color="primary">Find My Mentor</Button>
+                            <Button variant="contained" color="primary" onClick={() => handleButtonClick('/find-mentor')}>Find My Mentor</Button>
                         </Grid>
                     </Grid>
 
@@ -79,7 +84,7 @@ const Home = (props) => {
 
                 <Grid item container justify="center" style={{ paddingTop: "0" }}>
                     <Grid item  >
-                        <Button variant="contained" color="primary">Find My Mentor</Button>
+                        <Button variant="contained" color="primary"  onClick={() => handleButtonClick('/find-mentor')}>Find My Mentor</Button>
                     </Grid>
                 </Grid>
 

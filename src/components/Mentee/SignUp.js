@@ -31,18 +31,17 @@ const Signup = (props) => {
         if (validEmail && validPass)
             setBtnDisabled(false);
     }
+    const RegisterButton = () => {
+        props.history.push('/');
+    }
     const handleClickOpen = () => {
         setOpen(true);
     };
     const handleClose = (value) => {
-        if(value=='close')
-        props.history.push('/');
-        if(value=='login')
-        props.history.push('/mentee-login');
         setOpen(false);
     };
 
-    const RedirectToMentor=()=>{
+    const RedirectToMentor = () => {
         props.history.push('/mentor-register');
     }
 
@@ -112,123 +111,123 @@ const Signup = (props) => {
     }
 
     return (
-        <React.Fragment>
-            <Container>
-                <Grid container spacing={4}>
-                    <Grid item container sm={6} spacing={2}>
-                        <Grid item xs={12}>
-                            <Typography color="primary" variant="h4">Sign up as a Mentee</Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
-                            <FormControl fullWidth margin="normal" variant="filled">
-                                <TextField
-                                    required
-                                    id="name"
-                                    label="Name"
-                                    color="primary"
-                                    variant="filled"
-                                    error={formData.error}
-                                    value={formData.name}
-                                    helperText={formData.name_error_text}
-                                    onBlur={ValidateName}
-                                    onChange={handleTextChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
-                            <FormControl fullWidth margin="normal" variant="filled">
-                                <TextField
-                                    required
-                                    id="email"
-                                    label="E-mail"
-                                    color="primary"
-                                    variant="filled"
-                                    helperText={formData.email_error_text}
-                                    error={formData.errorEmail}
-                                    value={formData.email}
-                                    onChange={handleTextChange}
-                                    onBlur={ValidateEmail}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
-                            <FormControl fullWidth margin="normal" variant="filled">
-                                <TextField
-                                    required
-                                    id="password"
-                                    label="Password"
-                                    color="primary"
-                                    variant="filled"
-                                    helperText={formData.password_error_text}
-                                    error={formData.errorPass}
-                                    value={formData.password}
-                                    onChange={handleTextChange}
-                                    onBlur={ValidatePass}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
-                            <FormControl fullWidth margin="normal" variant="filled">
-                                <TextField
 
-                                    id="linkedInUrl"
-                                    label="LinkedIn Url"
-                                    color="primary"
-                                    variant="filled"
-                                    value={formData.linkedInUrl}
-                                    onChange={handleTextChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item container justify="center" sm={9} >
-                            <Grid item   >
-                                <Button variant="contained" color="primary" disabled={btnDisabled} onClick={handleClickOpen}>Sign Up</Button>
-                            </Grid>
-                        </Grid>
+        <Container>
+            <Grid container spacing={4}>
+                <Grid item container sm={6} spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography color="primary" variant="h4">Sign up as a Mentee</Typography>
                     </Grid>
-                    <Grid item container sm={6} spacing={2} justify='center' alignContent="center" >
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="filled">
+                            <TextField
+                                required
+                                id="name"
+                                label="Name"
+                                color="primary"
+                                variant="filled"
+                                error={formData.error}
+                                value={formData.name}
+                                helperText={formData.name_error_text}
+                                onBlur={ValidateName}
+                                onChange={handleTextChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="filled">
+                            <TextField
+                                required
+                                id="email"
+                                label="E-mail"
+                                color="primary"
+                                variant="filled"
+                                helperText={formData.email_error_text}
+                                error={formData.errorEmail}
+                                value={formData.email}
+                                onChange={handleTextChange}
+                                onBlur={ValidateEmail}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="filled">
+                            <TextField
+                                required
+                                id="password"
+                                label="Password"
+                                color="primary"
+                                variant="filled"
+                                helperText={formData.password_error_text}
+                                error={formData.errorPass}
+                                value={formData.password}
+                                onChange={handleTextChange}
+                                onBlur={ValidatePass}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="filled">
+                            <TextField
 
-                        <Grid item xs={12} sm={6}>
-                            <Typography color="primary" variant="h5">Are You a Mentor?</Typography>
-                        </Grid>
-
-                        <Grid item xs={12} sm={9}>
-                            <img alt="complex" src={Mentor} style={{ maxWidth: "75%" }} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} >
-                            <Button variant="text" color="primary" onClick={RedirectToMentor}>Sign Up here</Button>
+                                id="linkedInUrl"
+                                label="LinkedIn Url"
+                                color="primary"
+                                variant="filled"
+                                value={formData.linkedInUrl}
+                                onChange={handleTextChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item container justify="center" sm={9} >
+                        <Grid item   >
+                            <Button variant="contained" color="primary" disabled={btnDisabled} onClick={RegisterButton}>Sign Up</Button>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Container>
+                <Grid item container sm={6} spacing={2} justify='center' alignContent="center" >
 
-            <Dialog
-                open={open}
-                onClose={handleClose}>
-                <DialogTitle disableTypography style={{backgroundColor: 'beige'}}>
-                   <div style={{display:'flex'}}>
-                   < CheckCircleSharpIcon color="primary"style={{width:'2em', height:'3em',paddingRight:'10px'}} />
-                   <h2>Successfully Registered with My Mentor</h2>
-                   </div>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText >
-                     <div style={{display:'flex',justifyContent:'center'}}>
-                     <h2>Please Login To Continue</h2> 
-                     </div>
-          </DialogContentText>
-                </DialogContent>
-                <DialogActions  style={{display:'flex',justifyContent:'space-around'}}>
-                    <Button onClick={()=>handleClose('close')} color="primary" variant='outlined'>
-                       Close
-          </Button>
-                    <Button onClick={()=>handleClose('login')} color="primary" variant='contained' autoFocus>
-                       Login
-          </Button>
-                </DialogActions>
-            </Dialog>
-        </React.Fragment>
+                    <Grid item xs={12} sm={6}>
+                        <Typography color="primary" variant="h5">Are You a Mentor?</Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sm={9}>
+                        <img alt="complex" src={Mentor} style={{ maxWidth: "75%" }} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} >
+                        <Button variant="text" color="primary" onClick={RedirectToMentor}>Sign Up here</Button>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Container>
+
+        /* <Dialog
+            open={open}
+            onClose={handleClose}>
+            <DialogTitle disableTypography style={{backgroundColor: 'beige'}}>
+               <div style={{display:'flex'}}>
+               < CheckCircleSharpIcon color="primary"style={{width:'2em', height:'3em',paddingRight:'10px'}} />
+               <h2>Successfully Registered with My Mentor</h2>
+               </div>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText >
+                 <div style={{display:'flex',justifyContent:'center'}}>
+                 <h2>Please Login To Continue</h2> 
+                 </div>
+      </DialogContentText>
+            </DialogContent>
+            <DialogActions  style={{display:'flex',justifyContent:'space-around'}}>
+                <Button onClick={()=>handleClose('close')} color="primary" variant='outlined'>
+                   Close
+      </Button>
+                <Button onClick={()=>handleClose('login')} color="primary" variant='contained' autoFocus>
+                   Login
+      </Button>
+            </DialogActions>
+        </Dialog> */
+
 
 
     )
