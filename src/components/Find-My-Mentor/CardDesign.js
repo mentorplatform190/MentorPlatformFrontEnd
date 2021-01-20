@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Button, Typography, Grid, Container, Paper, Avatar } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import { Link } from 'react-router-dom';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import PublicIcon from '@material-ui/icons/Public';
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -114,10 +115,15 @@ const CardDesign = (props) => {
 
                     <Grid item container xs={12} sm={2} direction="row" justify="center" alignItems="center" spacing={2}>
                         <Grid item xs={6} sm={12}>
-                            <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
+                            <Link to={'/auth/mentor-dashboard'} style={{textDecoration:"none"}}>
+                                <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
+                            </Link>
+
                         </Grid>
                         <Grid item xs={6} sm={12}>
-                            <Button variant="contained" color="primary">View Profile</Button>
+                            <Link to={'/auth/mentor-dashboard'} style={{textDecoration:"none"}}>
+                                <Button variant="contained" color="primary" >View Profile</Button>
+                            </Link>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -181,10 +187,16 @@ const CardDesign = (props) => {
                     </Grid>
                     <Grid item container sm={4} direction="column" justify="center" alignItems="center" spacing={2}>
                         <Grid item >
-                            <Button classes={{ containedPrimary: classes.successBtn }}  variant="contained" color="primary" >Book a session</Button>
+                            <Link to={'/auth/mentor-dashboard'} style={{textDecoration:"none"}}>
+                                <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
+                            </Link>
+
                         </Grid>
                         <Grid item >
-                            <Button variant="contained" color="primary" >View Profile</Button>
+                            <Link to={'/auth/mentor-dashboard'} style={{textDecoration:"none"}}>
+                                <Button variant="contained" color="primary" >View Profile</Button>
+                            </Link>
+
                         </Grid>
                     </Grid>
                 </Grid>)}
