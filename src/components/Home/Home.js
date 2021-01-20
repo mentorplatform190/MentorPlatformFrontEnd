@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import mentee from '../../assets/images/Home-1.svg'
 import SelectMentor from '../../assets/images/mentee.jpg'
@@ -12,7 +12,6 @@ import Calender from '../../assets/images/Calender.svg'
 import Students from '../../assets/images/students.png'
 import TikTok from '../../assets/images/tik-tok.jpg'
 import Google from '../../assets/images/google.jpg'
-import { withRouter } from 'react-router-dom'
 import Fb from '../../assets/images/facebook.png'
 import PayPal from '../../assets/images/pay-pal.png'
 const useStyles = makeStyles((theme) => ({

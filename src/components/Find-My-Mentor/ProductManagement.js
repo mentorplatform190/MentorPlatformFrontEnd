@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Design from '../Find-My-Mentor/CardDesign'
 import Profile from '../../Test';
 const ProdMang = (props) => {
-    const result = Profile.filter(data => data.category == 'Product-Management');
+    const result = Profile.filter(data => data.category === 'Product-Management');
     let ProfileData =result.map((index) => {
         return (
             <Design

@@ -2,7 +2,7 @@ import React from "react";
 import Classes from './Footer.module.css';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const FooterPage = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
   return (
     <Grid container className={Classes.Footer} >
       <Grid item container direction="column" sm={3} xs={12} spacing={2}>

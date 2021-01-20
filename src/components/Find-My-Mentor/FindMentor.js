@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import validator from 'validator';
-import { Button, Typography, Grid, Container, Tab, Tabs, AppBar, Paper } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from 'react';
+import {  Typography, Grid, Container, Tab, Tabs, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import All from './All';
 import DataScience from './DataScience';
 import ProductManagement from './ProductManagement';

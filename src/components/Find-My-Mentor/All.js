@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Design from '../Find-My-Mentor/CardDesign'
 import Profile from '../../Test';
 const All = (props) => {

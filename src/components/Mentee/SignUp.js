@@ -4,7 +4,6 @@ import { FormControl, TextField, Button, Typography, Grid, Container, Dialog, Di
 import Mentor from '../../assets/images/men-sign.jpg'
 import CheckCircleSharpIcon from '@material-ui/icons/CheckCircleSharp';
 const Signup = (props) => {
-    console.log(props);
     const menteeData = {
         name: '',
         email: '',

@@ -72,9 +72,10 @@ const Signup = (props) => {
             }
         }
     }
-
+    const RedirectToProfile = () => {
+        props.history.push('/mentor-profile');
+    }
     const ValidateEmail = () => {
-        console.log(formData.email);
         if (formData.email === "") {
             setFormData({
                 ...formData,
@@ -188,7 +189,7 @@ const Signup = (props) => {
                     </Grid>
                     <Grid item container justify="center" sm={9} >
                         <Grid item   >
-                            <Button variant="contained" color="primary" disabled={btnDisabled}>Sign Up</Button>
+                            <Button variant="contained" color="primary" disabled={btnDisabled} onClick={RedirectToProfile}>Sign Up</Button>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -203,7 +204,7 @@ const Signup = (props) => {
                     </Grid>
 
                     <Grid item xs={12} sm={6} >
-                        <Button variant="text" color="primary">Sign Up here</Button>
+                        <Button variant="text" color="primary" >Sign Up here</Button>
                     </Grid>
                 </Grid>
             </Grid>

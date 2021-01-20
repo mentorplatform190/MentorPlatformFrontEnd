@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Button, Typography, Grid, Container, Paper, Avatar, Card, CardContent, CardHeader } from '@material-ui/core';
+import { Button, Typography, Grid, Container, Paper, Avatar } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import PublicIcon from '@material-ui/icons/Public';
@@ -44,11 +44,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CardDesign = (props) => {
+    const { history } = props;
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
     const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     const classes = useStyles();
-    const avatarImage = props.name.toUpperCase().split('')
+    const avatarImage = props.name.toUpperCase().split('');
+    // const handleButtonClick = (pageUrl) => {
+    //     history.push(pageUrl)
+    // }
     return (
 
         <Container style={{ marginBottom: "40px" }}>
@@ -113,7 +117,7 @@ const CardDesign = (props) => {
                             <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
                         </Grid>
                         <Grid item xs={6} sm={12}>
-                            <Button variant="contained" color="primary" >View Profile</Button>
+                            <Button variant="contained" color="primary">View Profile</Button>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -177,7 +181,7 @@ const CardDesign = (props) => {
                     </Grid>
                     <Grid item container sm={4} direction="column" justify="center" alignItems="center" spacing={2}>
                         <Grid item >
-                            <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
+                            <Button classes={{ containedPrimary: classes.successBtn }}  variant="contained" color="primary" >Book a session</Button>
                         </Grid>
                         <Grid item >
                             <Button variant="contained" color="primary" >View Profile</Button>
