@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from "../../env-axios";
 import {
     FormControl, TextField, Button, Typography, Grid, Container, Avatar, IconButton,
     List,
@@ -49,8 +50,13 @@ const MentorProfile = (props) => {
         tags: '',
         experience: '',
         graduatedAt: '',
-        mobileNumber: ''
+        mobileNumber: '',
+        timeDate: ''
     };
+
+    useEffect(() => {
+        getMentorData();
+    }, []);
     const timedateData = {
         TimeDate: new Date(),
     };
@@ -60,6 +66,7 @@ const MentorProfile = (props) => {
         props.history.push('/mentee-req');
     }
     const handleTextChange = (event) => {
+        console.log(formData);
         setFormData({
             ...formData,
             [event.target.id]: event.target.value
@@ -83,7 +90,65 @@ const MentorProfile = (props) => {
         selectedDateCopy[index].TimeDate = e;
         handleDateChange(selectedDateCopy);
     }
+    const getMentorData = () => {
+        const id = localStorage.getItem('Mentorid');
+        const token= localStorage.getItem('Mentortoken')
+        const headers = {
+            'Content-Type': 'application/json',
+            'token': token
+        };
+        axios.get('/mentor/' + id , {
+            headers: headers
+        })
+            .then(function (response) {
+                console.log(response);
+                 //menteeData.jobTitle : response.data.job_title,
+            
+                 
+                //date_time: (selectedDate),
 
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+    const submitData = () => {
+        const tagData = formData.tags.split(',');
+        const data = {
+            job_title: formData.jobTitle,
+            company: formData.company,
+            category: formData.category,
+            tags: tagData,
+            price: formData.pricePerSession,
+            experience: formData.experience,
+            college: formData.graduatedAt,
+            bio: formData.bio,
+            mobile_number: formData.mobileNumber,
+            profile_picture: "",
+            linkedin: "",
+            date_time: (selectedDate),
+        }
+
+        console.log('data', data);
+        const id = localStorage.getItem('Mentorid');
+        const headers = {
+            'Content-Type': 'application/json',
+            'id': id
+        };
+
+
+        axios.post('/mentor/update', data, {
+            headers: headers
+        })
+            .then(function (response) {
+                console.log(response);
+                props.history.push('/mentee-req');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     const renderDateTimePicker = () => {
         return selectedDate.map((Seldate, id) => {
             return (
@@ -140,60 +205,59 @@ const MentorProfile = (props) => {
                     </Grid>
                 </Grid>
                 <Grid item container spacing={2} sm={6}>
-                    <Grid item container sm={12} spacing={2}>
-                        <Grid item xs={12} sm={9}>
-                            <FormControl fullWidth margin="normal" variant="outlined">
-                                <TextField
-                                    required
-                                    id="jobTitle"
-                                    label="Job Title"
-                                    color="primary"
-                                    variant="outlined"
-                                    value={formData.jobTitle}
-                                    onChange={handleTextChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
-                            <FormControl fullWidth margin="normal" variant="outlined">
-                                <TextField
-                                    required
-                                    id="category"
-                                    label="Category"
-                                    color="primary"
-                                    variant="outlined"
-                                    value={formData.category}
-                                    onChange={handleTextChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
-                            <FormControl fullWidth margin="normal" variant="outlined">
-                                <TextField
-                                    required
-                                    id="pricePerSession"
-                                    label="Price per Session"
-                                    color="primary"
-                                    variant="outlined"
-                                    value={formData.pricePerSession}
-                                    onChange={handleTextChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
-                            <FormControl fullWidth margin="normal" variant="outlined">
-                                <TextField
-                                    id="bio"
-                                    label="Bio*"
-                                    multiline
-                                    rows={4}
-                                    variant="outlined"
-                                    value={formData.bio}
-                                    onChange={handleTextChange}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="outlined">
+                            <TextField
+                                required
+                                id="jobTitle"
+                                label="Job Title"
+                                color="primary"
+                                variant="outlined"
+                                value={formData.jobTitle}
+                                onChange={handleTextChange}
+                            />
+                        </FormControl>
                     </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="outlined">
+                            <TextField
+                                required
+                                id="category"
+                                label="Category"
+                                color="primary"
+                                variant="outlined"
+                                value={formData.category}
+                                onChange={handleTextChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="outlined">
+                            <TextField
+                                required
+                                id="pricePerSession"
+                                label="Price per Session"
+                                color="primary"
+                                variant="outlined"
+                                value={formData.pricePerSession}
+                                onChange={handleTextChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="outlined">
+                            <TextField
+                                id="bio"
+                                label="Bio*"
+                                multiline
+                                rows={4}
+                                variant="outlined"
+                                value={formData.bio}
+                                onChange={handleTextChange}
+                            />
+                        </FormControl>
+                    </Grid>
+
                 </Grid>
                 <Grid item container sm={6} spacing={2}>
                     <Grid item xs={12} sm={9}>
@@ -205,6 +269,19 @@ const MentorProfile = (props) => {
                                 color="primary"
                                 variant="outlined"
                                 value={formData.company}
+                                onChange={handleTextChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <FormControl fullWidth margin="normal" variant="outlined">
+                            <TextField
+                                required
+                                id="experience"
+                                label="experience"
+                                color="primary"
+                                variant="outlined"
+                                value={formData.experience}
                                 onChange={handleTextChange}
                             />
                         </FormControl>
@@ -257,10 +334,10 @@ const MentorProfile = (props) => {
 
                 <Grid item container justify="center" alignItems="center" sm={12}>
                     <Grid item xs={4} sm={3} >
-                        <Button variant="text" color="primary" >Edit</Button>
+                        <Button variant="contained" color="primary">Edit</Button>
                     </Grid>
                     <Grid item xs={4} sm={3} >
-                        <Button variant="text" color="primary" >Submit</Button>
+                        <Button variant="contained" color="primary" onClick={submitData} >Submit</Button>
                     </Grid>
                 </Grid>
             </Grid>

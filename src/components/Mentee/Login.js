@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
+import axios from "../../env-axios";
 import { FormControl, TextField, Button, Typography, Grid, Container } from '@material-ui/core';
 import Students from '../../assets/images/students.png'
 const Login = (props) => {
@@ -25,8 +26,21 @@ const Login = (props) => {
             setBtnDisabled(false);
     }
     const Login = () => {
-        console.log('logged-----');
-
+        const data = {
+            email: formData.email,
+            password: formData.password
+        }
+        console.log('data', data);
+        axios.post('/login/mentee', data)
+            .then(function (response) {
+                console.log(response);
+                localStorage.setItem('Menteetoken', response.data.token);
+                localStorage.setItem('Menteeid', response.data.user_data.id);
+                props.history.push('/');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     const RedirectToMentor = () => {
@@ -65,7 +79,6 @@ const Login = (props) => {
     }
 
     const ValidateEmail = () => {
-        console.log(formData.email);
         if (formData.email === "") {
             setFormData({
                 ...formData,

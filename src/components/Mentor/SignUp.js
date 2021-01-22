@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 import { FormControl, TextField, Button, Typography, Grid, Container } from '@material-ui/core';
+import axios from "../../env-axios";
 import Mentor from '../../assets/images/men-sign.jpg'
 const Signup = (props) => {
     const menteeData = {
@@ -73,7 +74,23 @@ const Signup = (props) => {
         }
     }
     const RedirectToProfile = () => {
-        props.history.push('/mentor-profile');
+        const data = {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password
+        }
+        console.log('data', data);
+        axios.post('/register/mentor', data)
+            .then(function (response) {
+                console.log(response);
+                localStorage.setItem('Mentortoken', response.data.token);
+                localStorage.setItem('Mentorid', response.data.user_data.id);
+                props.history.push('/mentor-profile');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+      
     }
     const ValidateEmail = () => {
         if (formData.email === "") {
@@ -113,6 +130,9 @@ const Signup = (props) => {
                 errorConfirmPass:false
             });
         }
+    }
+    const RedirectToMentee = () => {
+        props.history.push('/mentee-register');
     }
     return (
         <Container>
@@ -204,7 +224,7 @@ const Signup = (props) => {
                     </Grid>
 
                     <Grid item xs={12} sm={6} >
-                        <Button variant="text" color="primary" >Sign Up here</Button>
+                        <Button variant="text" color="primary" onClick={RedirectToMentee}>Sign Up here</Button>
                     </Grid>
                 </Grid>
             </Grid>

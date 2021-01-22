@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
+import axios from "../../env-axios";
 import { FormControl, TextField, Button, Typography, Grid, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import Mentor from '../../assets/images/men-sign.jpg'
 import CheckCircleSharpIcon from '@material-ui/icons/CheckCircleSharp';
@@ -31,7 +32,24 @@ const Signup = (props) => {
             setBtnDisabled(false);
     }
     const RegisterButton = () => {
-        props.history.push('/');
+        const data = {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            linkedin: formData.linkedInUrl
+        }
+        console.log('data', data);
+        axios.post('/register/mentee', data)
+            .then(function (response) {
+                console.log(response);
+                localStorage.setItem('Menteetoken', response.data.token);
+                localStorage.setItem('Menteeid', response.data.user_data.id);
+                props.history.push('/');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
     const handleClickOpen = () => {
         setOpen(true);
@@ -85,7 +103,6 @@ const Signup = (props) => {
     }
 
     const ValidateEmail = () => {
-        console.log(formData.email);
         if (formData.email === "") {
             setFormData({
                 ...formData,

@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CardDesign = (props) => {
+    console.log('props', props);
     const { history } = props;
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
@@ -77,13 +78,13 @@ const CardDesign = (props) => {
                                 </Grid>
                                 <Grid item container xs={12} sm={12} direction="row" justify="space-between">
                                     <Grid item>
-                                        {props.skills[0] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[0]}</Typography> : null}
+                                        {props.skills && props.skills[0] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[0]}</Typography> : null}
                                     </Grid>
                                     <Grid item>
-                                        {props.skills[1] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[1]}</Typography> : null}
+                                        {props.skills && props.skills[1] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[1]}</Typography> : null}
                                     </Grid>
                                     {!isMobile ? (<Grid item>
-                                        {props.skills[2] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[2]}</Typography> : null}
+                                        {props.skills && props.skills[2] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[2]}</Typography> : null}
                                     </Grid>) : null}
                                 </Grid>
 
@@ -115,13 +116,24 @@ const CardDesign = (props) => {
 
                     <Grid item container xs={12} sm={2} direction="row" justify="center" alignItems="center" spacing={2}>
                         <Grid item xs={6} sm={12}>
-                            <Link to={'/auth/mentor-dashboard'} style={{textDecoration:"none"}}>
+                            
+                            <Link to={{
+                                pathname: '/auth/mentor-dashboard',
+                                state: {
+                                    id: props.keyId
+                                }
+                            }} style={{ textDecoration: "none" }}>
                                 <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
                             </Link>
 
                         </Grid>
                         <Grid item xs={6} sm={12}>
-                            <Link to={'/auth/mentor-dashboard'} style={{textDecoration:"none"}}>
+                            <Link to={{
+                                pathname: '/auth/mentor-dashboard',
+                                state: {
+                                    id: props.keyId
+                                }
+                            }} style={{ textDecoration: "none" }}>
                                 <Button variant="contained" color="primary" >View Profile</Button>
                             </Link>
                         </Grid>
@@ -138,7 +150,7 @@ const CardDesign = (props) => {
                         </Avatar>
                     </Grid>
                     <Grid item sm={6} >
-                        <Paper style={{ display: "flex", flexDirection: 'column' }} classes={{ root: classes.root }}>
+                        <Paper style={{ display: "flex", flexDirection: 'column', minHeight: "200px" }} classes={{ root: classes.root }}>
                             <Container>
                                 <Grid item container direction="row" style={{ marginTop: "15px" }}>
                                     <Grid item sm={4} >
@@ -146,13 +158,13 @@ const CardDesign = (props) => {
                                     </Grid>
                                     <Grid item container sm={8} direction="row" justify="space-evenly">
                                         <Grid item>
-                                            {props.skills[0] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[0]}</Typography> : null}
+                                            {props.skills && props.skills[0] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[0]}</Typography> : null}
                                         </Grid>
                                         <Grid item>
-                                            {props.skills[1] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[1]}</Typography> : null}
+                                            {props.skills && props.skills[1] ? <Typography color="primary" className={classes.borderStyling}>{props.skills[1]}</Typography> : null}
                                         </Grid>
                                         <Grid item>
-                                            {props.skills[2] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[2]}</Typography> : null}
+                                            {props.skills && props.skills[2] ? <Typography color="primary" className={classes.borderStyling} >{props.skills[2]}</Typography> : null}
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -187,13 +199,23 @@ const CardDesign = (props) => {
                     </Grid>
                     <Grid item container sm={4} direction="column" justify="center" alignItems="center" spacing={2}>
                         <Grid item >
-                            <Link to={'/auth/mentor-dashboard'} style={{textDecoration:"none"}}>
+                            <Link to={{
+                                pathname: '/auth/mentor-dashboard',
+                                state: {
+                                    id: props.keyId
+                                }
+                            }} style={{ textDecoration: "none" }}>
                                 <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
                             </Link>
 
                         </Grid>
                         <Grid item >
-                            <Link to={'/auth/mentor-dashboard'} style={{textDecoration:"none"}}>
+                            <Link to={{
+                                pathname: '/auth/mentor-dashboard',
+                                state: {
+                                    id: props.keyId
+                                }
+                            }} style={{ textDecoration: "none" }}>
                                 <Button variant="contained" color="primary" >View Profile</Button>
                             </Link>
 

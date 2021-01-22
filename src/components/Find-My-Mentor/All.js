@@ -1,20 +1,49 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Design from '../Find-My-Mentor/CardDesign'
 import Profile from '../../Test';
+import axios from "../../env-axios";
+
 const All = (props) => {
-    let ProfileData = Profile.map((index) => {
-        return (
-            <Design
-            key={index.id}
-            name={index.name}
-            image={index.image}
-            bio={index.Bio}
-            price={index.price}
-            skills={index.skills}
-            position={index.position}
-            />
-        );
-    });
+   const [mentorData, selectMentorData] = useState();
+   let ProfileData;
+    useEffect(() => {
+        getMentorData();
+    }, []);
+
+    const getMentorData = () => {
+        const id = localStorage.getItem('Mentorid');
+        const token= localStorage.getItem('Mentortoken')
+        const headers = {
+            'Content-Type': 'application/json',
+            'token': token
+        };
+        axios.get('/all/mentor')
+            .then(function (response) {
+                console.log(response);
+                selectMentorData(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+    if(mentorData!==undefined)
+    {
+            ProfileData = mentorData.map((index) => {
+            return (
+                <Design
+                key={index.id}
+                name={index.name}
+                image={index.profile_picture}
+                bio={index.bio}
+                price={index.price}
+                skills={index.tags}
+                position={index.job_title}
+                />
+            );
+        });
+    }
+
     return (
         <div>{ProfileData}</div>
     )

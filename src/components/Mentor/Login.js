@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 import { FormControl, TextField, Button, Typography, Grid, Container } from '@material-ui/core';
+import axios from "../../env-axios";
 import Students from '../../assets/images/students.png'
 const Login = (props) => {
     const menteeData = {
@@ -25,8 +26,21 @@ const Login = (props) => {
             setBtnDisabled(false);
     }
     const Login = () => {
-        props.history.push('/auth/mentor-dashboard');
-
+        const data = {
+            email: formData.email,
+            password: formData.password
+        }
+        console.log('data', data);
+        axios.post('/login/mentor', data)
+            .then(function (response) {
+                console.log(response);
+                localStorage.setItem('Mentortoken', response.data.token);
+                localStorage.setItem('Mentorid', response.data.user_data.id);
+                response.data.user_data.status?  props.history.push('/mentee-req'):props.history.push('/mentor-profile');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     const RedirectToMentor = () => {
