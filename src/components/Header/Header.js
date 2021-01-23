@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -52,6 +52,8 @@ const Header = (props) => {
     const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     const anchorRef = useRef(null);
     //const path = props.location.pathname.slice(1);
+    const Mentortoken = localStorage.getItem('Mentortoken');
+    const Menteetoken = localStorage.getItem('Menteetoken');
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
@@ -60,6 +62,13 @@ const Header = (props) => {
         history.push(pageUrl)
         setOpen(false);
     };
+    const ClearTokens = () => {
+        localStorage.removeItem("Menteetoken");
+        localStorage.removeItem("Mentortoken");
+        localStorage.removeItem("Menteeid");
+        localStorage.removeItem("Mentorid");
+        history.push('/')
+    }
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -72,6 +81,36 @@ const Header = (props) => {
     const handleButtonClick = (pageUrl) => {
         history.push(pageUrl)
     }
+
+    const UpdateProfile = () => {
+        props.history.push('/mentor-profile');
+    }
+    const MenteeReq = () => {
+        props.history.push('/mentee-req');
+    }
+    const renderWelcomeMessage = () => {
+        if (Menteetoken !== null) {
+
+            return (
+                <Button color="secondary" >Welcome!</Button>)
+
+        }
+        else if (Mentortoken !== null) {
+            return (
+                <React.Fragment>
+                    <Button color="secondary" onClick={UpdateProfile}>Update Profile</Button>
+                    <Button color="secondary" onClick={MenteeReq}>Mentee Request</Button>
+                </React.Fragment>
+            )
+
+
+        }
+        else {
+            return (
+                <Button color="secondary" onClick={() => handleButtonClick('/mentor-register')}>Become A Mentor</Button>)
+        }
+    }
+
     return (
         <Grid container >
             <AppBar position="static">
@@ -105,10 +144,15 @@ const Header = (props) => {
                             <MenuItem onClick={() => handleMenuClick('/find-mentor')}>Find My Mentor</MenuItem>
                             <MenuItem onClick={() => handleMenuClick}>Blog</MenuItem>
                             <MenuItem onClick={() => handleMenuClick}>Contact</MenuItem>
-                            <MenuItem onClick={() => handleMenuClick('/mentor-register')}>Become A Mentor</MenuItem>
-                            <MenuItem onClick={() => handleMenuClick('/mentee-login')}>LOG IN AS MENTEE</MenuItem>
-                            <MenuItem onClick={() => handleMenuClick('/mentor-login')}>LOG IN AS MENTOR</MenuItem>
-                            <MenuItem onClick={() => handleMenuClick('/mentee-register')}>SIGN UP</MenuItem>
+                            {Mentortoken || Menteetoken ? null : (<MenuItem onClick={() => handleMenuClick('/mentor-register')}>Become A Mentor</MenuItem>)}
+                            {Menteetoken || Mentortoken ? (<MenuItem onClick={ClearTokens}>LOG OUT</MenuItem>) : (
+                                <React.Fragment><MenuItem onClick={() => handleMenuClick('/mentee-login')}>LOG IN AS MENTEE</MenuItem>
+                                    <MenuItem onClick={() => handleMenuClick('/mentor-login')}>LOG IN AS MENTOR</MenuItem></React.Fragment>
+                            )}
+                            {Menteetoken || Mentortoken ? null : (
+                                <MenuItem onClick={() => handleMenuClick('/mentee-register')}>SIGN UP</MenuItem>
+                            )}
+
                         </Menu>
                     </Grid>) :
                         (<Grid item container sm={10} spacing={1} justify="space-evenly"
@@ -124,18 +168,23 @@ const Header = (props) => {
                                 <Button color="secondary" onClick={() => handleButtonClick}>Contact</Button>
                             </Grid>
                             <Grid item>
-                                <Button color="secondary" onClick={() => handleButtonClick('/mentor-register')}>Become A Mentor</Button>
+                                {renderWelcomeMessage()}
                             </Grid>
                             <Grid item>
-                                <Button color="secondary" classes={{ outlined: classes.buttonOutlined }} variant="outlined" ref={anchorRef}
+                                {Menteetoken || Mentortoken ? (
+                                    <Button color="secondary" classes={{ outlined: classes.buttonOutlined }} variant="outlined"
+                                        onClick={ClearTokens}>LOG OUT </Button>
+                                ) : (<Button color="secondary" classes={{ outlined: classes.buttonOutlined }} variant="outlined" ref={anchorRef}
                                     aria-controls={openp ? 'menu-list-grow' : undefined}
                                     aria-haspopup="true"
-                                    onClick={handleToggle}>LOG IN </Button>
+                                    onClick={handleToggle}>LOG In </Button>)}
                             </Grid>
                             <Grid item>
-                                <Button color="secondary" classes={{ outlined: classes.buttonOutlined }} variant="outlined"
-                                    onClick={() => handleButtonClick('/mentee-register')}>SIGN UP</Button>
-                                <Popper open={openp} anchorEl={anchorRef.current}  disablePortal>
+                                {Menteetoken || Mentortoken ? null : (<Button color="secondary" classes={{ outlined: classes.buttonOutlined }} variant="outlined"
+                                    onClick={() => handleButtonClick('/mentee-register')}>SIGN UP</Button>)}
+
+
+                                <Popper open={openp} anchorEl={anchorRef.current} disablePortal>
                                     {() => (
                                         <Paper>
                                             <ClickAwayListener onClickAway={handleClose}>

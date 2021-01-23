@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Button, Typography, Grid, Container, Paper, Avatar } from '@material-ui/core';
+import { Button, Typography, Grid, Container, Paper, Avatar, Popper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { Link } from 'react-router-dom';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import PublicIcon from '@material-ui/icons/Public';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import CheckCircleSharpIcon from '@material-ui/icons/CheckCircleSharp';
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: '#F1F9FF'
@@ -15,9 +16,12 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(3),
         height: theme.spacing(3),
     },
+    paper: {
+        border: '1px solid',
+        padding: theme.spacing(1),
+        backgroundColor: "#2699FB",
+    },
     large: {
-
-
         [theme.breakpoints.down('sm')]: {
             width: theme.spacing(8),
             height: theme.spacing(8),
@@ -45,16 +49,122 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CardDesign = (props) => {
-    console.log('props', props);
-    const { history } = props;
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
     const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     const classes = useStyles();
     const avatarImage = props.name.toUpperCase().split('');
-    // const handleButtonClick = (pageUrl) => {
-    //     history.push(pageUrl)
-    // }
+    const Mentortoken = localStorage.getItem('Mentortoken');
+    const Menteetoken = localStorage.getItem('Menteetoken');
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [open, setOpen] = useState(false);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+        if (anchorEl) {
+            setTimeout(() => {
+                setAnchorEl(null);
+            }, 2000);
+        }
+    };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = (value) => {
+        setOpen(false);
+
+    };
+
+    const openPopper = Boolean(anchorEl);
+    const bookCall = () => {
+        if (Mentortoken) {
+            return (
+                <React.Fragment>
+                    <Grid item >
+                        <Button onClick={handleClick} classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
+                    </Grid>
+                    <Grid item >
+                        <Button onClick={handleClick} variant="contained" color="primary" >View Profile</Button>
+                    </Grid>
+                    <Popper placement="right" open={openPopper} anchorEl={anchorEl}>
+                        <div className={classes.paper}>Only Mentee Can Book a Call.</div>
+                    </Popper>
+                </React.Fragment>
+            )
+        }
+        else if (Menteetoken) {
+            return (
+                <React.Fragment>
+                    <Grid item >
+                        <Link to={{
+                            pathname: '/auth/mentor-dashboard',
+                            state: {
+                                id: props.keyId
+                            }
+                        }} style={{ textDecoration: "none" }}>
+                            <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
+                        </Link>
+
+                    </Grid>
+                    <Grid item >
+                        <Link to={{
+                            pathname: '/auth/mentor-dashboard',
+                            state: {
+                                id: props.keyId
+                            }
+                        }} style={{ textDecoration: "none" }}>
+                            <Button variant="contained" color="primary" >View Profile</Button>
+                        </Link>
+                    </Grid>
+                </React.Fragment>
+            )
+        }
+        else {
+            return (
+                <React.Fragment>
+                    <Grid item >
+                        <Button onClick={handleClickOpen} classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
+                    </Grid>
+                    <Grid item >
+                        <Button onClick={handleClickOpen} variant="contained" color="primary" >View Profile</Button>
+                    </Grid>
+
+                    <Dialog
+                        open={open}
+                        onClose={handleClose}>
+                        <DialogTitle disableTypography style={{ backgroundColor: 'beige' }}>
+                            <div style={{ display: 'flex' }}>
+                                < CheckCircleSharpIcon color="primary" style={{ width: '2em', height: '3em', paddingRight: '10px' }} />
+                                <h2>You Don't Have Access To Book a Call</h2>
+                            </div>
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText >
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <h2>Please Register With My-Mentor Or Login With Your Credentials</h2>
+                                </div>
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            <Button onClick={() => handleClose('close')} color="primary" variant='outlined'>
+                                Close
+                        </Button>
+                            <Link to={{
+                                pathname: '/mentee-login',
+                            }} style={{ textDecoration: "none" }}>
+                                <Button onClick={() => handleClose('close')} color="primary" variant='outlined'>
+                                    Login
+                        </Button>
+                            </Link>
+
+                        </DialogActions>
+                    </Dialog>
+                </React.Fragment>
+            )
+        }
+
+
+    }
     return (
 
         <Container style={{ marginBottom: "40px" }}>
@@ -115,28 +225,7 @@ const CardDesign = (props) => {
                     </Grid>
 
                     <Grid item container xs={12} sm={2} direction="row" justify="center" alignItems="center" spacing={2}>
-                        <Grid item xs={6} sm={12}>
-                            
-                            <Link to={{
-                                pathname: '/auth/mentor-dashboard',
-                                state: {
-                                    id: props.keyId
-                                }
-                            }} style={{ textDecoration: "none" }}>
-                                <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
-                            </Link>
-
-                        </Grid>
-                        <Grid item xs={6} sm={12}>
-                            <Link to={{
-                                pathname: '/auth/mentor-dashboard',
-                                state: {
-                                    id: props.keyId
-                                }
-                            }} style={{ textDecoration: "none" }}>
-                                <Button variant="contained" color="primary" >View Profile</Button>
-                            </Link>
-                        </Grid>
+                        {bookCall()}
                     </Grid>
                 </Grid>
             )
@@ -198,28 +287,7 @@ const CardDesign = (props) => {
                         </Paper>
                     </Grid>
                     <Grid item container sm={4} direction="column" justify="center" alignItems="center" spacing={2}>
-                        <Grid item >
-                            <Link to={{
-                                pathname: '/auth/mentor-dashboard',
-                                state: {
-                                    id: props.keyId
-                                }
-                            }} style={{ textDecoration: "none" }}>
-                                <Button classes={{ containedPrimary: classes.successBtn }} variant="contained" color="primary" >Book a session</Button>
-                            </Link>
-
-                        </Grid>
-                        <Grid item >
-                            <Link to={{
-                                pathname: '/auth/mentor-dashboard',
-                                state: {
-                                    id: props.keyId
-                                }
-                            }} style={{ textDecoration: "none" }}>
-                                <Button variant="contained" color="primary" >View Profile</Button>
-                            </Link>
-
-                        </Grid>
+                        {bookCall()}
                     </Grid>
                 </Grid>)}
         </Container>

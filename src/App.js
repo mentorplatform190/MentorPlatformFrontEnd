@@ -10,6 +10,10 @@ import Home from './components/Home/Home';
 import MentorProfile from './components/Mentor/Profile';
 import Dashboard from './components/Mentor/Dashboard';
 import MenteeReq from './components/Mentee/Request'
+import BookingSlot from './components/Mentee/BookingConfirm';
+import MenteeReset from './components/Mentee/ResetPassword';
+import MentorReset from './components/Mentor/ResetPassword';
+
 
 const app=(props)=> {
   let routes = (
@@ -20,10 +24,13 @@ const app=(props)=> {
     <Route path="/mentee-login" component={MenteeLogin} />
     <Route path="/mentor-login" exact component={MentorLogin} />
     <Route path="/mentor-profile"  component={MentorProfile} />
+    <Route path="/book-slot"  component={BookingSlot} />
     <Route path="/auth/mentor-dashboard"  component={Dashboard} />
     <Route path="/mentee-req"  component={MenteeReq} />
     <Redirect exact from="/find-mentor" to="/find-mentor/all" />
     <Route path="/find-mentor/:page?" exact component={FindMentor} />
+    <Route path="/resetpassword/mentee/:resetToken?"  component={MenteeReset} />
+    <Route path="/resetpassword/mentor/:resetToken?"  component={MentorReset} />
     <Route path="/" exact component={Home} />
     <Redirect to="/" />
   

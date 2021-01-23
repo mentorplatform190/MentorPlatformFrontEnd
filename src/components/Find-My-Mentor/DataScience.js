@@ -1,7 +1,6 @@
 import React, {useState, useEffect}from 'react';
 import Design from '../Find-My-Mentor/CardDesign'
-import Profile from '../../Test';
-import axios from "../../env-axios";
+import axios from "axios";
 const DataScience = (props) => {
     const [mentorData, selectMentorData] = useState();
     let ProfileData;
@@ -17,7 +16,6 @@ const DataScience = (props) => {
         };
         axios.get('/all/mentor')
             .then(function (response) {
-                console.log(response);
                 selectMentorData(response.data);
             })
             .catch(function (error) {
@@ -29,7 +27,6 @@ const DataScience = (props) => {
     {
         const result = mentorData.filter(data => data.category === 'Data-Science');
             ProfileData = result.map((index) => {
-                console.log(index);
             return (
                 <Design
                 keyId={index.id}

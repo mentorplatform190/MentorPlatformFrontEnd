@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 import { FormControl, TextField, Button, Typography, Grid, Container } from '@material-ui/core';
-import axios from "../../env-axios";
+import axios from "axios";
 import Mentor from '../../assets/images/men-sign.jpg'
 const Signup = (props) => {
     const menteeData = {
@@ -79,10 +79,10 @@ const Signup = (props) => {
             email: formData.email,
             password: formData.password
         }
-        console.log('data', data);
+       
         axios.post('/register/mentor', data)
             .then(function (response) {
-                console.log(response);
+               
                 localStorage.setItem('Mentortoken', response.data.token);
                 localStorage.setItem('Mentorid', response.data.user_data.id);
                 props.history.push('/mentor-profile');

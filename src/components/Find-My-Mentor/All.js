@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Design from '../Find-My-Mentor/CardDesign'
-import Profile from '../../Test';
-import axios from "../../env-axios";
+import axios from "axios";
 
 const All = (props) => {
    const [mentorData, selectMentorData] = useState();
@@ -19,7 +18,6 @@ const All = (props) => {
         };
         axios.get('/all/mentor')
             .then(function (response) {
-                console.log(response);
                 selectMentorData(response.data);
             })
             .catch(function (error) {
@@ -32,7 +30,7 @@ const All = (props) => {
             ProfileData = mentorData.map((index) => {
             return (
                 <Design
-                key={index.id}
+                keyId={index.id}
                 name={index.name}
                 image={index.profile_picture}
                 bio={index.bio}

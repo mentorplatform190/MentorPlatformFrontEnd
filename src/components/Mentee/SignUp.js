@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
-import axios from "../../env-axios";
-import { FormControl, TextField, Button, Typography, Grid, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import axios from "axios";
+import { FormControl, TextField, Button, Typography, Grid, Container } from '@material-ui/core';
 import Mentor from '../../assets/images/men-sign.jpg'
-import CheckCircleSharpIcon from '@material-ui/icons/CheckCircleSharp';
 const Signup = (props) => {
     const menteeData = {
         name: '',
@@ -22,7 +21,6 @@ const Signup = (props) => {
     const [validEmail, setValidEmail] = useState(false);
     const [validPass, setValidPass] = useState(false);
     const [btnDisabled, setBtnDisabled] = useState(true);
-    const [open, setOpen] = useState(false);
     useEffect(() => {
         HandleButton();
     }, [validEmail, validPass]);
@@ -38,10 +36,10 @@ const Signup = (props) => {
             password: formData.password,
             linkedin: formData.linkedInUrl
         }
-        console.log('data', data);
+      
         axios.post('/register/mentee', data)
             .then(function (response) {
-                console.log(response);
+               
                 localStorage.setItem('Menteetoken', response.data.token);
                 localStorage.setItem('Menteeid', response.data.user_data.id);
                 props.history.push('/');
@@ -51,13 +49,6 @@ const Signup = (props) => {
             });
 
     }
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = (value) => {
-        setOpen(false);
-    };
-
     const RedirectToMentor = () => {
         props.history.push('/mentor-register');
     }
@@ -217,32 +208,6 @@ const Signup = (props) => {
                 </Grid>
             </Grid>
         </Container>
-
-        /* <Dialog
-            open={open}
-            onClose={handleClose}>
-            <DialogTitle disableTypography style={{backgroundColor: 'beige'}}>
-               <div style={{display:'flex'}}>
-               < CheckCircleSharpIcon color="primary"style={{width:'2em', height:'3em',paddingRight:'10px'}} />
-               <h2>Successfully Registered with My Mentor</h2>
-               </div>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText >
-                 <div style={{display:'flex',justifyContent:'center'}}>
-                 <h2>Please Login To Continue</h2> 
-                 </div>
-      </DialogContentText>
-            </DialogContent>
-            <DialogActions  style={{display:'flex',justifyContent:'space-around'}}>
-                <Button onClick={()=>handleClose('close')} color="primary" variant='outlined'>
-                   Close
-      </Button>
-                <Button onClick={()=>handleClose('login')} color="primary" variant='contained' autoFocus>
-                   Login
-      </Button>
-            </DialogActions>
-        </Dialog> */
 
 
 

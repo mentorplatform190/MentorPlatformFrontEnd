@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from "../../env-axios";
+import axios from "axios";
 import {
     FormControl, TextField, Button, Typography, Grid, Container, Avatar, IconButton,
     List,
@@ -58,7 +58,7 @@ const MentorProfile = (props) => {
         getMentorData();
     }, []);
     const timedateData = {
-        TimeDate: new Date(),
+        TimeDate: null,
     };
     const [selectedDate, handleDateChange] = useState([timedateData]);
     const [formData, setFormData] = useState(menteeData);
@@ -66,7 +66,6 @@ const MentorProfile = (props) => {
         props.history.push('/mentee-req');
     }
     const handleTextChange = (event) => {
-        console.log(formData);
         setFormData({
             ...formData,
             [event.target.id]: event.target.value
@@ -92,20 +91,29 @@ const MentorProfile = (props) => {
     }
     const getMentorData = () => {
         const id = localStorage.getItem('Mentorid');
-        const token= localStorage.getItem('Mentortoken')
+        const token = localStorage.getItem('Mentortoken')
         const headers = {
             'Content-Type': 'application/json',
             'token': token
         };
-        axios.get('/mentor/' + id , {
+        axios.get('/mentor/' + id, {
             headers: headers
         })
             .then(function (response) {
-                console.log(response);
-                 //menteeData.jobTitle : response.data.job_title,
-            
-                 
-                //date_time: (selectedDate),
+               
+                const menteeData = {
+                    jobTitle: response.data.user_data.job_title,
+                    category: response.data.user_data.category,
+                    pricePerSession: response.data.user_data.price,
+                    bio: response.data.user_data.bio,
+                    company: response.data.user_data.company,
+                    tags: response.data.user_data.tags.toString(),
+                    experience: response.data.user_data.experience,
+                    graduatedAt: response.data.user_data.college,
+                    mobileNumber: response.data.user_data.mobile_number,
+                };
+                handleDateChange(response.data.user_data.date_time);
+                setFormData(menteeData);
 
             })
             .catch(function (error) {
@@ -130,11 +138,13 @@ const MentorProfile = (props) => {
             date_time: (selectedDate),
         }
 
-        console.log('data', data);
+      
         const id = localStorage.getItem('Mentorid');
+        const token= localStorage.getItem('Mentortoken');
         const headers = {
             'Content-Type': 'application/json',
-            'id': id
+            'id': id,
+            'token': token
         };
 
 
@@ -142,7 +152,7 @@ const MentorProfile = (props) => {
             headers: headers
         })
             .then(function (response) {
-                console.log(response);
+               
                 props.history.push('/mentee-req');
             })
             .catch(function (error) {
